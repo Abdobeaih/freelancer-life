@@ -1,0 +1,136 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ─── Enums ──────────────────────────────────────────────────
+
+enum Plan {
+  free
+  premium
+  elite
+}
+
+enum Role {
+  user
+  admin
+  company
+}
+
+enum Category {
+  gym
+  food
+  medical
+  fun
+}
+
+enum Status {
+  pending
+  approved
+  rejected
+}
+
+enum TxType {
+  earn
+  spend
+  bonus
+}
+
+// ─── Models ─────────────────────────────────────────────────
+
+model User {
+  id             String    @id @default(cuid())
+  name           String
+  email          String    @unique
+  passwordHash   String
+  job            String
+  plan           Plan      @default(free)
+  points         Int       @default(0)
+  pointsSpent    Int       @default(0)
+  scans          Int       @default(0)
+  saved          Float     @default(0)
+  referralCode   String    @unique
+  referredById   String?
+  referredBy     User?     @relation("Referrals", fields: [referredById], references: [id])
+  referrals      User[]    @relation("Referrals")
+  card           Card?
+  transactions   PointTx[]
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+}
+
+model Card {
+  id        String   @id @default(cuid())
+  userId    String   @unique
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  nameOnCard String
+  lastFour  String
+  expiry    String
+  createdAt DateTime @default(now())
+}
+
+model PointTx {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  type      TxType
+  points    Int
+  desc      String
+  icon      String   @default("sparkles")
+  createdAt DateTime @default(now())
+}
+
+model Company {
+  id           String      @id @default(cuid())
+  name         String
+  email        String      @unique
+  passwordHash String
+  category     Category
+  city         String
+  emoji        String
+  status       Status      @default(pending)
+  views        Int         @default(0)
+  discounts    Discount[]
+  ptRewards    PtReward[]
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
+}
+
+model Discount {
+  id          Int      @id @default(autoincrement())
+  name        String
+  description String
+  category    Category
+  percentage  String
+  city        String
+  tier        Plan     @default(free)
+  status      Status   @default(pending)
+  uses        Int      @default(0)
+  views       Int      @default(0)
+  companyId   String?
+  company     Company? @relation(fields: [companyId], references: [id], onDelete: SetNull)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model PtReward {
+  id             String   @id @default(cuid())
+  description    String
+  points         Int
+  active         Boolean  @default(true)
+  redeemedCount  Int      @default(0)
+  companyId      String
+  company        Company  @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  createdAt      DateTime @default(now())
+}
+
+model Admin {
+  id           String   @id @default(cuid())
+  username     String   @unique
+  passwordHash String
+  createdAt    DateTime @default(now())
+}

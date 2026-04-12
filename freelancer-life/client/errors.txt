@@ -1,0 +1,12 @@
+src/App.tsx(20,17): error TS6133: 'MONTHS_S' is declared but its value is never read.
+src/App.tsx(237,46): error TS2339: Property 'badge' does not exist on type '{ k: string; ico: string; lbl: string; }'.
+src/components/company/CompanyPages.tsx(3,25): error TS6133: 'PLANS' is declared but its value is never read.
+src/components/shared/DiscountCard.tsx(3,19): error TS6133: 'PLANS' is declared but its value is never read.
+src/components/shared/PCard.tsx(4,1): error TS6133: 'maskNum' is declared but its value is never read.
+src/components/user/UserPages.tsx(3,35): error TS6133: 'CAT_EMO' is declared but its value is never read.
+src/components/user/UserPages.tsx(3,49): error TS6133: 'canAccess' is declared but its value is never read.
+src/components/user/UserPages.tsx(5,18): error TS6133: 'Bars' is declared but its value is never read.
+src/components/user/UserPages.tsx(5,24): error TS6133: 'ProgBar' is declared but its value is never read.
+src/components/user/UserPages.tsx(9,1): error TS6133: 'api' is declared but its value is never read.
+src/lib/api.ts(4,24): error TS2339: Property 'env' does not exist on type 'ImportMeta'.
+src/pages/HomePage.tsx(2,10): error TS6133: 'PLANS' is declared but its value is never read.
