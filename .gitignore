@@ -1,40 +1,28 @@
 ```
 # Dependencies
 node_modules/
+package-lock.json
 
-# Build outputs
-dist/
-build/
-target/
-
-# TypeScript
-*.tsbuildinfo
-.next/
-.nuxt/
-
-# Environment variables
+# Environment
 .env
 .env.local
 *.env.*
 
-# Logs
+# Logs and temp files
 *.log
+*.tmp
 
-# IDE
+# Editors
 .vscode/
 .idea/
-*.swp
-*.swo
 
-# OS
-.DS_Store
-Thumbs.db
-
-# Prisma
-prisma/migrations/
-prisma/schema.prisma.bak
-
-# Temporary files
-*.tmp
-*.temp
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+venv/
+.venv/
+.env
 ```
